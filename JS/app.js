@@ -1,5 +1,11 @@
-function getInputValue(){
-           
+let array = JSON.parse(localStorage.getItem('array')) || [];
+
+function storeinlocalStorage (array){
+    localStorage.setItem('array', JSON.stringify(array));
+}
+
+function getInputValue(event){
+    event.preventDefault();
     let inputVal = document.getElementById("myInput").value;
     let source = document.getElementById("lu");
    
@@ -7,18 +13,17 @@ function getInputValue(){
   
     let newli = source.appendChild(node);
    newli.textContent += inputVal;
-  localStorage.setItem("inputVal",JSON.stringify(inputVal));
-  JSON.parse(localStorage.getItem("inputVal"));
+   let item = {name:inputVal};
+   array.push(item);
+   storeinlocalStorage(array);
+   
    let button = document.createElement('button');
 button.textContent = "Remove";
 
-newli.appendChild(button);
-   
-   
-}
+newli.appendChild(button);}
 
 let el = document.getElementById("btn");
-el.addEventListener("click", getInputValue, false);
+el.addEventListener("click", getInputValue, false); 
 
 let parent = document.getElementById('lu');
 
@@ -26,4 +31,4 @@ parent.addEventListener("click", function(event) {
 if (event.target.tagName === "BUTTON") {
 event.target.parentElement.remove();
 }else if (event.target.tagName === "LI"){event.target.style.textDecoration = "line-through";}
-}); 
+});
